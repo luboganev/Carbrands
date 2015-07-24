@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Car brands</string>
+    <string name="title_activity_car_brands_list">Car brands</string>
+    <string name="title_activity_car_brand_detail">Car brand</string>
+    <string name="location_aware_country_filtering">Location aware country filtering</string>
+    <string name="detail_origin_country_label">Country of origin</string>
+    <string name="detail_founder_names_label">Founders</string>
+</resources>
