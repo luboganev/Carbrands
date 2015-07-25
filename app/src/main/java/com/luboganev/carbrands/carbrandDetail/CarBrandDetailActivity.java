@@ -51,13 +51,13 @@ public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBra
     @Override
     protected void onInjected(Bundle savedInstanceState) {
         super.onInjected(savedInstanceState);
-        presenter.onViewCreated(getIntent().getExtras(), savedInstanceState);
+        presenter.onViewCreate(getIntent().getExtras(), savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onViewShown();
+        presenter.onViewShow();
     }
 
     @Override
@@ -103,8 +103,8 @@ public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBra
     @Override
     public void setCarBrand(CarBrandDetailDisplayModel carBrand) {
         setTitle(carBrand.getName());
-        countryOriginTextView.setText(carBrand.getCountryName());
-        founderNamesTextView.setText(carBrand.getFoundersNames());
-        Picasso.with(this).load(carBrand.getmLogoImageUrl()).placeholder(R.drawable.loading_placeholder).into(logoImageView);
+        countryOriginTextView.setText(carBrand.countryName);
+        founderNamesTextView.setText(carBrand.foundersNames);
+        Picasso.with(this).load(carBrand.logoImageUrl).placeholder(R.drawable.loading_placeholder).into(logoImageView);
     }
 }

@@ -9,25 +9,25 @@ import com.luboganev.carbrands.model.CarBrand;
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
 public class CarBrandListDisplayModel implements Parcelable {
-    private final long mCarBrandId;
-    private final String mName;
+    public final long id;
+    public final String name;
 
     public long getCarBrandId() {
-        return mCarBrandId;
+        return id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public CarBrandListDisplayModel(CarBrand carBrand) {
-        mCarBrandId = carBrand.getId();
-        mName = carBrand.getName();
+        id = carBrand.id;
+        name = carBrand.name;
     }
 
     protected CarBrandListDisplayModel(Parcel in) {
-        mCarBrandId = in.readLong();
-        mName = in.readString();
+        id = in.readLong();
+        name = in.readString();
     }
 
     @Override
@@ -37,8 +37,8 @@ public class CarBrandListDisplayModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mCarBrandId);
-        dest.writeString(mName);
+        dest.writeLong(id);
+        dest.writeString(name);
     }
 
     @SuppressWarnings("unused")
@@ -74,11 +74,11 @@ public class CarBrandListDisplayModel implements Parcelable {
 
         // Check each field. Primitive fields, reference fields, and nullable reference
         // fields are all treated differently.
-        return (mName == null ? castedObject.mName == null : mName.equals(castedObject.mName));
+        return (name == null ? castedObject.name == null : name.equals(castedObject.name));
     }
 
     @Override
     public String toString() {
-        return mName;
+        return name;
     }
 }

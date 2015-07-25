@@ -13,6 +13,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * This is the root Dagger module, which is created when the application is started.
+ * It is not related to any UI element, therefore the objects provided by it have lifecycle as long
+ * as the Application process itself.
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
 @Module(

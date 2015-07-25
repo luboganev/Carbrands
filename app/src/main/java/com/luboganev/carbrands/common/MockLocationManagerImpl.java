@@ -5,6 +5,10 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 
 /**
+ * A mock implementation of a location manager which picks a random country from a static list
+ * and returns it as the current location on every request. Any delays while retrieving the
+ * data are simulated through a sleeping AsyncTask.
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
 public class MockLocationManagerImpl implements LocationManager {

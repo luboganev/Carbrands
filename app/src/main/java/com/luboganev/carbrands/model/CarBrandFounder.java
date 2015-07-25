@@ -1,35 +1,21 @@
 package com.luboganev.carbrands.model;
 
 /**
+ * A model containing the names of a single car brand founder
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
 public class CarBrandFounder {
-    private String mFirstName;
-    private String mLastName;
+    public String firstName;
+    public String lastName;
 
     public CarBrandFounder() {
-        this.mFirstName = "";
-        this.mLastName = "";
+        firstName = "";
+        lastName = "";
     }
 
     public CarBrandFounder(String firstName, String lastName) {
-        mFirstName = firstName;
-        mLastName = lastName;
-    }
-
-    public String getFirstName() {
-        return mFirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        mFirstName = firstName;
-    }
-
-    public String getLastName() {
-        return mLastName;
-    }
-
-    public void setLastName(String lastName) {
-        mLastName = lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

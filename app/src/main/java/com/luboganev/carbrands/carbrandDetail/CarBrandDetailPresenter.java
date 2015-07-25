@@ -25,7 +25,7 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
     // CarBrandDetailPresenterInput implementation
 
     @Override
-    public void onViewShown() {
+    public void onViewShow() {
         if(mLoadedData != null) {
             mView.setCarBrand(mLoadedData);
             return;
@@ -47,7 +47,7 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
     }
 
     @Override
-    public void onViewCreated(Bundle launchingIntentExtras, Bundle savedInstanceState) {
+    public void onViewCreate(Bundle launchingIntentExtras, Bundle savedInstanceState) {
         CarBrandListDisplayModel intentCarBrand = mNavigator.getCarBrandListDisplayModel(launchingIntentExtras);
         if(intentCarBrand != null) {
             mInteractor.setCarBrandIdToLoad(intentCarBrand.getCarBrandId());
@@ -57,6 +57,11 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
         if(savedInstanceState != null && savedInstanceState.containsKey(STATE_EXTRA_LOADED_DATA)) {
             mLoadedData = savedInstanceState.getParcelable(STATE_EXTRA_LOADED_DATA);
         }
+    }
+
+    @Override
+    public void onViewDestroy(boolean isExiting) {
+
     }
 
     // CarBrandDetailInteractorOutput implementation

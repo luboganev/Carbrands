@@ -12,42 +12,30 @@ import com.luboganev.carbrands.model.CarBrandFounder;
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
 public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel implements Parcelable {
-    private final String mCountryName;
-    private final String mLogoImageUrl;
-    private final String mFoundersNames;
-
-    public String getCountryName() {
-        return mCountryName;
-    }
-
-    public String getmLogoImageUrl() {
-        return mLogoImageUrl;
-    }
-
-    public String getFoundersNames() {
-        return mFoundersNames;
-    }
+    public final String countryName;
+    public final String logoImageUrl;
+    public final String foundersNames;
 
     public CarBrandDetailDisplayModel(CarBrand carBrand) {
         super(carBrand);
-        mCountryName = CountryNamesHelper.getCountryName(carBrand.getCountryCode());
-        mLogoImageUrl = carBrand.getLogoImageUrl();
+        countryName = CountryNamesHelper.getCountryName(carBrand.countryCode);
+        logoImageUrl = carBrand.logoImageUrl;
 
         StringBuilder sb = new StringBuilder();
-        for (CarBrandFounder carBrandFounder : carBrand.getFounders()) {
+        for (CarBrandFounder carBrandFounder : carBrand.founders) {
             if (sb.length() > 0) {
                 sb.append(", ");
             }
-            sb.append(carBrandFounder.getFirstName()).append(" ").append(carBrandFounder.getLastName());
+            sb.append(carBrandFounder.firstName).append(" ").append(carBrandFounder.lastName);
         }
-        mFoundersNames = sb.toString();
+        foundersNames = sb.toString();
     }
 
     protected CarBrandDetailDisplayModel(Parcel in) {
         super(in);
-        mCountryName = in.readString();
-        mLogoImageUrl = in.readString();
-        mFoundersNames = in.readString();
+        countryName = in.readString();
+        logoImageUrl = in.readString();
+        foundersNames = in.readString();
     }
 
     @Override
@@ -58,9 +46,9 @@ public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel impleme
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeString(mCountryName);
-        dest.writeString(mLogoImageUrl);
-        dest.writeString(mFoundersNames);
+        dest.writeString(countryName);
+        dest.writeString(logoImageUrl);
+        dest.writeString(foundersNames);
     }
 
     @SuppressWarnings("unused")
@@ -95,8 +83,8 @@ public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel impleme
 
         // Check each field. Primitive fields, reference fields, and nullable reference
         // fields are all treated differently.
-        return (mCountryName == null ? castedObject.mCountryName == null : mCountryName.equals(castedObject.mCountryName)) &&
-                (mLogoImageUrl == null ? castedObject.mLogoImageUrl == null : mLogoImageUrl.equals(castedObject.mLogoImageUrl)) &&
-                (mFoundersNames == null ? castedObject.mFoundersNames == null : mFoundersNames.equals(castedObject.mFoundersNames));
+        return (countryName == null ? castedObject.countryName == null : countryName.equals(castedObject.countryName)) &&
+                (logoImageUrl == null ? castedObject.logoImageUrl == null : logoImageUrl.equals(castedObject.logoImageUrl)) &&
+                (foundersNames == null ? castedObject.foundersNames == null : foundersNames.equals(castedObject.foundersNames));
     }
 }

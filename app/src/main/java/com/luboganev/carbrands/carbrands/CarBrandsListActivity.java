@@ -60,13 +60,13 @@ public class CarBrandsListActivity extends BaseDaggerActivity implements CarBran
     @Override
     protected void onInjected(Bundle savedInstanceState) {
         super.onInjected(savedInstanceState);
-        presenter.onViewCreated(null, savedInstanceState);
+        presenter.onViewCreate(null, savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onViewShown();
+        presenter.onViewShow();
     }
 
     @Override

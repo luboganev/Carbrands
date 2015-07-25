@@ -4,61 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A model of a Car brand, containing all information related to it. The names of the
+ * car brand founders are stored as a list of the specific CarBrandFounder model.
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
 public class CarBrand {
     public static final long STORE_ID_NONE = -1L;
 
-    private long mId = STORE_ID_NONE;
-    private String mName;
-    private String mCountryCode;
-    private String mLogoImageUrl;
-    private List<CarBrandFounder> mFounders;
+    public long id = STORE_ID_NONE;
+    public String name;
+    public String countryCode;
+    public String logoImageUrl;
+    public List<CarBrandFounder> founders;
 
     public CarBrand(String name, String countryCode, String logoImageUrl) {
-        mName = name;
-        mCountryCode = countryCode;
-        mLogoImageUrl = logoImageUrl;
-        mFounders = new ArrayList<>();
-    }
-
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long id) {
-        mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public String getCountryCode() {
-        return mCountryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        mCountryCode = countryCode;
-    }
-
-    public String getLogoImageUrl() {
-        return mLogoImageUrl;
-    }
-
-    public void setLogoImageUrl(String logoImageUrl) {
-        mLogoImageUrl = logoImageUrl;
-    }
-
-    public List<CarBrandFounder> getFounders() {
-        return mFounders;
-    }
-
-    public void setFounders(List<CarBrandFounder> founders) {
-        mFounders = founders;
+        this.name = name;
+        this.countryCode = countryCode;
+        this.logoImageUrl = logoImageUrl;
+        founders = new ArrayList<>();
     }
 }

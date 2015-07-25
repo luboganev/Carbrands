@@ -8,6 +8,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * A simple module, which provides an implementation of the Navigator. It requires an activity,
+ * since navigation can occur only from the currently active Activity.
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
 @Module(

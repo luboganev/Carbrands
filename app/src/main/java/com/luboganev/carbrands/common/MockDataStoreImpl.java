@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A mock implementation of a data store filled with mock data stored in memory.
+ * Any delays while retrieving the data are simulated through a sleeping AsyncTask.
+ *
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
 public class MockDataStoreImpl implements DataStore {
@@ -90,7 +93,7 @@ public class MockDataStoreImpl implements DataStore {
     private static List<CarBrand> filterId(long id, List<CarBrand> carBrands) {
         List<CarBrand> result = new ArrayList<>();
         for(CarBrand brand : carBrands) {
-            if(brand.getId() == id) {
+            if(brand.id == id) {
                 result.add(brand);
                 break;
             }
@@ -101,7 +104,7 @@ public class MockDataStoreImpl implements DataStore {
     private static List<CarBrand> filterCountryCode(String countryCode, List<CarBrand> carBrands) {
         List<CarBrand> result = new ArrayList<>();
         for(CarBrand brand : carBrands) {
-            if(brand.getCountryCode().equals(countryCode)) {
+            if(brand.countryCode.equals(countryCode)) {
                 result.add(brand);
             }
         }
@@ -123,151 +126,151 @@ public class MockDataStoreImpl implements DataStore {
         long id = 1;
 
         CarBrand brand = new CarBrand("Alfa Romeo", "IT", "http://upload.wikimedia.org/wikipedia/en/thumb/2/24/Alfa_Romeo.svg/500px-Alfa_Romeo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         CarBrandFounder founder = new CarBrandFounder("Alexandre", "Darracq");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Ugo", "Stella");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Nicola", "Romeo");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Aston Martin", "GB", "http://upload.wikimedia.org/wikipedia/en/thumb/e/e9/AstonMartinLogo.svg/500px-AstonMartinLogo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Lionel", "Martin");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Robert", "Bamford");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Audi", "DE", "http://upload.wikimedia.org/wikipedia/en/0/04/Audi_AG_logo.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("August", "Horch");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Bentley", "GB", "http://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Bentley_logo.svg/500px-Bentley_logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("H. M.", "Bentley");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("W. O.", "Bentley");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("BMW", "DE", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/500px-BMW.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Franz Josef", "Popp");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Karl", "Rapp");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Camillo", "Castiglioni");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Bugatti", "FR", "http://upload.wikimedia.org/wikipedia/en/thumb/6/60/Bugatti_logo.svg/500px-Bugatti_logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Wolfgang", "Dürheimer");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Ferrari", "IT", "http://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Ferrari-Logo.svg/500px-Ferrari-Logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Enzo", "Ferrari");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Fiat", "IT", "http://upload.wikimedia.org/wikipedia/en/thumb/9/96/Fiat_Logo.svg/500px-Fiat_Logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Giovanni", "Agnelli");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Ford", "US", "http://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ford_Motor_Company_Logo.svg/500px-Ford_Motor_Company_Logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Henry", "Ford");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Lamborghini", "IT", "http://upload.wikimedia.org/wikipedia/en/thumb/d/df/Lamborghini_Logo.svg/500px-Lamborghini_Logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Ferruccio", "Lamborghini");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Lexus", "JP", "http://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Lexus_division_emblem.svg/500px-Lexus_division_emblem.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Eiji", "Toyoda");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Mercedes-Benz", "DE", "http://upload.wikimedia.org/wikipedia/en/b/bb/Mercedes_benz_silverlogo.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Karl", "Benz");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Gottlieb", "Daimler");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Mitsubishi", "JP", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mitsubishi_logo.svg/500px-Mitsubishi_logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Iwasaki", "Yatarō");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Opel", "DE", "http://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Opel-Logo-2011-Slogan-Vector.svg/500px-Opel-Logo-2011-Slogan-Vector.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Adam", "Opel");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Porsche", "DE", "http://upload.wikimedia.org/wikipedia/en/7/73/Porsche_logotype.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Ferdinand", "Porsche");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Subaru", "JP", "http://upload.wikimedia.org/wikipedia/en/thumb/4/47/Subaru_logo.svg/500px-Subaru_logo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Kenji", "Kita");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Toyota", "JP", "http://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/500px-Toyota_carlogo.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Kiichiro", "Toyoda");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Volkswagen", "DE", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Volkswagen_logo_2012.svg/500px-Volkswagen_logo_2012.svg.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("German Labour Front", "");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
         
 
         brand = new CarBrand("Volvo", "SE", "http://upload.wikimedia.org/wikipedia/en/9/9c/Volvo_Cars_logo.png");
-        brand.setId(id++);
+        brand.id = id++;
         founder = new CarBrandFounder("Gustav", "Larson");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         founder = new CarBrandFounder("Assar", "Gabrielsson");
-        brand.getFounders().add(founder);
+        brand.founders.add(founder);
         mStoredCarBrands.add(brand);
     }
 }

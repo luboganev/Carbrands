@@ -32,7 +32,7 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     // CarBrandsPresenterInput
 
     @Override
-    public void onViewShown() {
+    public void onViewShow() {
         if(mLoadedData != null) {
             mView.setCarBrands(mLoadedData);
             return;
@@ -83,7 +83,7 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     }
 
     @Override
-    public void onViewCreated(Bundle launchingIntentExtras, Bundle savedInstanceState) {
+    public void onViewCreate(Bundle launchingIntentExtras, Bundle savedInstanceState) {
         if(savedInstanceState == null) {
             return;
         }
@@ -98,6 +98,11 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
         } else {
             mView.clearCountryName();
         }
+    }
+
+    @Override
+    public void onViewDestroy(boolean isExiting) {
+
     }
 
     @Override
