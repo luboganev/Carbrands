@@ -9,12 +9,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.luboganev.carbrands.R;
+import com.luboganev.carbrands.application.CarBrandsApplication;
 import com.luboganev.carbrands.baseui.BaseDaggerActivity;
-import com.luboganev.carbrands.common.NavigatorModule;
 import com.squareup.picasso.Picasso;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,35 +20,32 @@ import butterknife.InjectView;
 
 public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBrandDetailPresenterOutput {
 
-    @Inject CarBrandDetailPresenterInput presenter;
+    @Inject
+    CarBrandDetailPresenterInput presenter;
 
-    @InjectView(R.id.logoImageView) ImageView logoImageView;
-    @InjectView(R.id.countryOriginTextView) TextView countryOriginTextView;
-    @InjectView(R.id.founderNamesTextView) TextView founderNamesTextView;
-    @InjectView(R.id.detailProgressBar) ProgressBar progressBar;
-    @InjectView(R.id.contentScrollView) ScrollView contentScrollView;
+    @InjectView(R.id.logoImageView)
+    ImageView logoImageView;
+    @InjectView(R.id.countryOriginTextView)
+    TextView countryOriginTextView;
+    @InjectView(R.id.founderNamesTextView)
+    TextView founderNamesTextView;
+    @InjectView(R.id.detailProgressBar)
+    ProgressBar progressBar;
+    @InjectView(R.id.contentScrollView)
+    ScrollView contentScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_brand_detail);
         ButterKnife.inject(this);
-    }
 
-    @Override
-    protected List<Object> getActivityModules() {
-        return Arrays.<Object>asList(new NavigatorModule(this), new CarBrandDetailModule(this));
-    }
-
-    @Override
-    protected boolean shouldInjectSelf() {
-        return true;
-    }
-
-    @Override
-    protected void onInjected(Bundle savedInstanceState) {
-        super.onInjected(savedInstanceState);
         presenter.onViewCreate(getIntent().getExtras(), savedInstanceState);
+    }
+
+    @Override
+    protected void daggerInject() {
+        CarBrandsApplication.get(this).component().inject(this);
     }
 
     @Override
@@ -81,7 +75,7 @@ public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBra
 
     @Override
     public void setCarBrandName(String carBrandName) {
-        if(carBrandName == null) {
+        if (carBrandName == null) {
             setTitle(R.string.title_activity_car_brand_detail);
             return;
         }

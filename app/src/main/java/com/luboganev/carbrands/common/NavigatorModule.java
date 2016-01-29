@@ -13,10 +13,9 @@ import dagger.Provides;
  *
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
-@Module(
-        addsTo = AppModule.class,
-        library = true
-)
+@Module(includes = {
+        AppModule.class
+})
 public class NavigatorModule {
     private final Activity mActivity;
 

@@ -5,7 +5,10 @@ package com.luboganev.carbrands.carbrandDetail;
  */
 public interface CarBrandDetailPresenterOutput {
     void showProgress();
+
     void hideProgress();
+
     void setCarBrand(CarBrandDetailDisplayModel carBrand);
+
     void setCarBrandName(String carBrandName);
 }

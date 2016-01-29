@@ -4,6 +4,7 @@ import com.luboganev.carbrands.application.AppModule;
 import com.luboganev.carbrands.common.DataStore;
 import com.luboganev.carbrands.common.LocationManager;
 import com.luboganev.carbrands.common.Navigator;
+import com.luboganev.carbrands.common.NavigatorModule;
 
 import javax.inject.Singleton;
 
@@ -13,10 +14,10 @@ import dagger.Provides;
 /**
  * Created by Lyubomir Ganev (ganevlyu) on 24.04.2015
  */
-@Module(injects = CarBrandsListActivity.class,
-        addsTo = AppModule.class,
-        complete = false
-)
+@Module(includes = {
+        AppModule.class,
+        NavigatorModule.class
+})
 public class CarBrandsListModule {
 
     private CarBrandsPresenterOutput mView;

@@ -12,9 +12,9 @@ import dagger.Provides;
 /**
  * Created by Lyubomir Ganev (ganevlyu) on 24.04.2015
  */
-@Module(injects = CarBrandDetailActivity.class,
-        addsTo = AppModule.class,
-        complete = false)
+@Module(includes = {
+        AppModule.class
+})
 public class CarBrandDetailModule {
 
     private CarBrandDetailPresenterOutput mView;
@@ -23,11 +23,15 @@ public class CarBrandDetailModule {
         mView = view;
     }
 
-    @Provides @Singleton public CarBrandDetailInteractorInput provideCarBrandDetailInteractor(DataStore dataStore) {
+    @Provides
+    @Singleton
+    public CarBrandDetailInteractorInput provideCarBrandDetailInteractor(DataStore dataStore) {
         return new CarBrandDetailInteractor(dataStore);
     }
 
-    @Provides @Singleton public CarBrandDetailPresenterInput provideCarBrandDetailPresenter(CarBrandDetailInteractorInput interactor, Navigator navigator) {
+    @Provides
+    @Singleton
+    public CarBrandDetailPresenterInput provideCarBrandDetailPresenter(CarBrandDetailInteractorInput interactor, Navigator navigator) {
         CarBrandDetailPresenter presenter = new CarBrandDetailPresenter(mView, interactor, navigator);
         interactor.setInteractorOutput(presenter);
         return presenter;
