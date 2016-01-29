@@ -12,6 +12,18 @@ import com.luboganev.carbrands.model.CarBrandFounder;
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
 public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel implements Parcelable {
+    @SuppressWarnings("unused")
+    public static final Creator<CarBrandDetailDisplayModel> CREATOR = new Creator<CarBrandDetailDisplayModel>() {
+        @Override
+        public CarBrandDetailDisplayModel createFromParcel(Parcel in) {
+            return new CarBrandDetailDisplayModel(in);
+        }
+
+        @Override
+        public CarBrandDetailDisplayModel[] newArray(int size) {
+            return new CarBrandDetailDisplayModel[size];
+        }
+    };
     public final String countryName;
     public final String logoImageUrl;
     public final String foundersNames;
@@ -50,19 +62,6 @@ public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel impleme
         dest.writeString(logoImageUrl);
         dest.writeString(foundersNames);
     }
-
-    @SuppressWarnings("unused")
-    public static final Creator<CarBrandDetailDisplayModel> CREATOR = new Creator<CarBrandDetailDisplayModel>() {
-        @Override
-        public CarBrandDetailDisplayModel createFromParcel(Parcel in) {
-            return new CarBrandDetailDisplayModel(in);
-        }
-
-        @Override
-        public CarBrandDetailDisplayModel[] newArray(int size) {
-            return new CarBrandDetailDisplayModel[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {

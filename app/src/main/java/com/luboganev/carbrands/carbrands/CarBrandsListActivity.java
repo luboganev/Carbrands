@@ -11,10 +11,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.luboganev.carbrands.R;
+import com.luboganev.carbrands.application.CarBrandsApplication;
 import com.luboganev.carbrands.baseui.BaseDaggerActivity;
-import com.luboganev.carbrands.common.NavigatorModule;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,13 +23,17 @@ import butterknife.InjectView;
 
 public class CarBrandsListActivity extends BaseDaggerActivity implements CarBrandsPresenterOutput, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, CompoundButton.OnCheckedChangeListener {
 
-    @Inject CarBrandsPresenterInput presenter;
+    @Inject
+    CarBrandsPresenterInput presenter;
 
-    @InjectView(R.id.listView) ListView listView;
-    @InjectView(R.id.progressBar) ProgressBar progressBar;
+    @InjectView(R.id.listView)
+    ListView listView;
+    @InjectView(R.id.progressBar)
+    ProgressBar progressBar;
     @InjectView(R.id.listSwipeContainer)
     SwipeRefreshLayout swipeRefreshContainer;
-    @InjectView(R.id.countryFilterCheckBox) CheckBox locationAwareFilteringCheckBox;
+    @InjectView(R.id.countryFilterCheckBox)
+    CheckBox locationAwareFilteringCheckBox;
 
     private ArrayAdapter<CarBrandListDisplayModel> mAdapter;
 
@@ -48,20 +51,10 @@ public class CarBrandsListActivity extends BaseDaggerActivity implements CarBran
     }
 
     @Override
-    protected List<Object> getActivityModules() {
-        return Arrays.<Object>asList(new NavigatorModule(this), new CarBrandsListModule(this));
+    protected void daggerInject() {
+        CarBrandsApplication.get(this).component().inject(this);
     }
 
-    @Override
-    protected boolean shouldInjectSelf() {
-        return true;
-    }
-
-    @Override
-    protected void onInjected(Bundle savedInstanceState) {
-        super.onInjected(savedInstanceState);
-        presenter.onViewCreate(null, savedInstanceState);
-    }
 
     @Override
     protected void onResume() {
@@ -94,7 +87,7 @@ public class CarBrandsListActivity extends BaseDaggerActivity implements CarBran
 
     @Override
     public void showProgress() {
-        if(!swipeRefreshContainer.isRefreshing()) {
+        if (!swipeRefreshContainer.isRefreshing()) {
             progressBar.setVisibility(View.VISIBLE);
             listView.setVisibility(View.INVISIBLE);
         }

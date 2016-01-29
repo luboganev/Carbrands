@@ -10,9 +10,14 @@ import java.util.List;
  * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
  */
 public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
-    private CarBrandDetailInteractorOutput mPresenter;
     private final DataStore mDataStore;
-
+    private CarBrandDetailInteractorOutput mPresenter;
+    private final DataStoreCallback mDataStoreCallback = new DataStoreCallback() {
+        @Override
+        public void foundCarBrands(List<CarBrand> carBrands) {
+            mPresenter.foundCarBrandDetail(new CarBrandDetailDisplayModel(carBrands.get(0)));
+        }
+    };
     private long mCarBrandIdToLoad = CarBrand.STORE_ID_NONE;
 
     public CarBrandDetailInteractor(DataStore dataStore) {
@@ -35,12 +40,5 @@ public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
         mDataStore.filterCarBrandId(mCarBrandIdToLoad);
         mDataStore.execute(mDataStoreCallback);
     }
-
-    private final DataStoreCallback mDataStoreCallback = new DataStoreCallback() {
-        @Override
-        public void foundCarBrands(List<CarBrand> carBrands) {
-            mPresenter.foundCarBrandDetail(new CarBrandDetailDisplayModel(carBrands.get(0)));
-        }
-    };
 
 }

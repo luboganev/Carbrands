@@ -19,9 +19,7 @@ import dagger.Provides;
  *
  * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
  */
-@Module(
-        library = true
-)
+@Module
 public class AppModule {
     private CarBrandsApplication application;
 

@@ -9,11 +9,10 @@ import com.luboganev.carbrands.common.Navigator;
  * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
  */
 public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, CarBrandDetailInteractorOutput {
+    private static final String STATE_EXTRA_LOADED_DATA = "state_extra_loaded_data";
     private final CarBrandDetailPresenterOutput mView;
     private final CarBrandDetailInteractorInput mInteractor;
     private final Navigator mNavigator;
-
-    private static final String STATE_EXTRA_LOADED_DATA = "state_extra_loaded_data";
     private CarBrandDetailDisplayModel mLoadedData;
 
     public CarBrandDetailPresenter(CarBrandDetailPresenterOutput view, CarBrandDetailInteractorInput interactor, Navigator navigator) {
@@ -26,7 +25,7 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
 
     @Override
     public void onViewShow() {
-        if(mLoadedData != null) {
+        if (mLoadedData != null) {
             mView.setCarBrand(mLoadedData);
             return;
         }
@@ -49,12 +48,12 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
     @Override
     public void onViewCreate(Bundle launchingIntentExtras, Bundle savedInstanceState) {
         CarBrandListDisplayModel intentCarBrand = mNavigator.getCarBrandListDisplayModel(launchingIntentExtras);
-        if(intentCarBrand != null) {
+        if (intentCarBrand != null) {
             mInteractor.setCarBrandIdToLoad(intentCarBrand.getCarBrandId());
             mView.setCarBrandName(intentCarBrand.getName());
         }
 
-        if(savedInstanceState != null && savedInstanceState.containsKey(STATE_EXTRA_LOADED_DATA)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_EXTRA_LOADED_DATA)) {
             mLoadedData = savedInstanceState.getParcelable(STATE_EXTRA_LOADED_DATA);
         }
     }
