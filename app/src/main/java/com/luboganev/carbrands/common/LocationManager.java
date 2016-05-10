@@ -6,7 +6,7 @@ package com.luboganev.carbrands.common;
  * It abstracts any underlying implementation which might be a standart Android Location provider,
  * Google Play Service database or another service.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public interface LocationManager {
     void requestUpdateCountryLocation(LocationManagerCallback callback);

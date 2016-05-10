@@ -18,7 +18,7 @@ import dagger.Provides;
  * It is not related to any UI element, therefore the objects provided by it have lifecycle as long
  * as the Application process itself.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 @Module(
         library = true

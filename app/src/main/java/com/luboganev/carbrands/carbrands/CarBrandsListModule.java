@@ -11,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 24.04.2015
+ * Created by luboganev on 24/04/2015
  */
 @Module(injects = CarBrandsListActivity.class,
         addsTo = AppModule.class,

@@ -19,6 +19,9 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * Created by luboganev on 20/04/2015
+ */
 public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBrandDetailPresenterOutput {
 
     @Inject CarBrandDetailPresenterInput presenter;

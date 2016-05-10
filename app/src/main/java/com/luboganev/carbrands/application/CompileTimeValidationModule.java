@@ -12,7 +12,7 @@ import dagger.Module;
  * which makes sure everything is alright with the object graph, so that no runtime crashes
  * due missing dependencies occur.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 @Module(
         includes = {

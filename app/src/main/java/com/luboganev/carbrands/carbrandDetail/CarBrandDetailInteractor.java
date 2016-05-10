@@ -7,7 +7,7 @@ import com.luboganev.carbrands.model.CarBrand;
 import java.util.List;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
+ * Created by luboganev on 27/04/2015
  */
 public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     private CarBrandDetailInteractorOutput mPresenter;

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.luboganev.carbrands.common.Navigator;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
+ * Created by luboganev on 27/04/2015
  */
 public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, CarBrandDetailInteractorOutput {
     private CarBrandDetailPresenterOutput mView;

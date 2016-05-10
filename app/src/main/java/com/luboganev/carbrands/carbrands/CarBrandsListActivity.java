@@ -20,6 +20,9 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * Created by luboganev on 21/04/2015
+ */
 public class CarBrandsListActivity extends BaseDaggerActivity implements CarBrandsPresenterOutput, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, CompoundButton.OnCheckedChangeListener {
 
     @Inject CarBrandsPresenterInput presenter;

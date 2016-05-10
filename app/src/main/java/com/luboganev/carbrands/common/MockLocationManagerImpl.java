@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
  * and returns it as the current location on every request. Any delays while retrieving the
  * data are simulated through a sleeping AsyncTask.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public class MockLocationManagerImpl implements LocationManager {
     private WeakReference<LocationManagerCallback> mLocationCallback;

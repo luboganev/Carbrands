@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.luboganev.carbrands.model.CarBrand;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 public class CarBrandListDisplayModel implements Parcelable {
     public final long id;

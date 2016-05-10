@@ -3,7 +3,7 @@ package com.luboganev.carbrands.carbrands;
 import android.support.annotation.NonNull;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public interface CarBrandsPresenterInput {
     void setView(@NonNull CarBrandsPresenterOutput view);

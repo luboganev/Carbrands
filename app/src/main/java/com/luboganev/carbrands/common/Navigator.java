@@ -7,7 +7,7 @@ import com.luboganev.carbrands.carbrands.CarBrandListDisplayModel;
 /**
  * This class encapsulates the necessary boilerplate code for navigating from one activity to another.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public class Navigator {
     private Activity mActivity;

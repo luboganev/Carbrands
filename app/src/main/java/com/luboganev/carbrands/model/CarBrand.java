@@ -7,7 +7,7 @@ import java.util.List;
  * A model of a Car brand, containing all information related to it. The names of the
  * car brand founders are stored as a list of the specific CarBrandFounder model.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 public class CarBrand {
     public static final long STORE_ID_NONE = -1L;
