@@ -7,4 +7,6 @@ public interface CarBrandsInteractorInput {
     void setInteractorOutput(CarBrandsInteractorOutput presenter);
 
     void loadCarBrands(boolean shouldFilterByCurrentCountry);
+
+    void destroy();
 }

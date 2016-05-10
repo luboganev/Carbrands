@@ -6,7 +6,7 @@ package com.luboganev.carbrands.carbrandDetail;
 public interface CarBrandDetailInteractorInput {
     void setInteractorOutput(CarBrandDetailInteractorOutput presenter);
 
-    void setCarBrandIdToLoad(long carBrandId);
-
     void loadCarBrandDetail();
+
+    void destroy();
 }

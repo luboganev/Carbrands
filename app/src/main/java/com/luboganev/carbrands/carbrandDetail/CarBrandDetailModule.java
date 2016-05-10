@@ -16,19 +16,20 @@ import dagger.Provides;
         addsTo = AppModule.class,
         complete = false)
 public class CarBrandDetailModule {
+    private final long mCarBrandId;
+    private final String mCarBrandName;
 
-    private CarBrandDetailPresenterOutput mView;
-
-    public CarBrandDetailModule(CarBrandDetailPresenterOutput view) {
-        mView = view;
+    public CarBrandDetailModule(long carBrandId, String carBrandName) {
+        mCarBrandId = carBrandId;
+        mCarBrandName = carBrandName;
     }
 
     @Provides @Singleton public CarBrandDetailInteractorInput provideCarBrandDetailInteractor(DataStore dataStore) {
-        return new CarBrandDetailInteractor(dataStore);
+        return new CarBrandDetailInteractor(mCarBrandId, dataStore);
     }
 
     @Provides @Singleton public CarBrandDetailPresenterInput provideCarBrandDetailPresenter(CarBrandDetailInteractorInput interactor, Navigator navigator) {
-        CarBrandDetailPresenter presenter = new CarBrandDetailPresenter(mView, interactor, navigator);
+        CarBrandDetailPresenter presenter = new CarBrandDetailPresenter(mCarBrandName, interactor, navigator);
         interactor.setInteractorOutput(presenter);
         return presenter;
     }

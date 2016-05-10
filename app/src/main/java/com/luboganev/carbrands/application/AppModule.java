@@ -6,6 +6,7 @@ import com.luboganev.carbrands.common.DataStore;
 import com.luboganev.carbrands.common.LocationManager;
 import com.luboganev.carbrands.common.MockDataStoreImpl;
 import com.luboganev.carbrands.common.MockLocationManagerImpl;
+import com.luboganev.carbrands.common.Navigator;
 
 import javax.inject.Singleton;
 
@@ -39,5 +40,9 @@ public class AppModule {
 
     @Provides @Singleton public DataStore provideDataStore() {
         return new MockDataStoreImpl();
+    }
+
+    @Provides @Singleton public Navigator provideNavigator() {
+        return new Navigator();
     }
 }

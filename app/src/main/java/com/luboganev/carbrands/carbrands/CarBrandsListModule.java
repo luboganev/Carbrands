@@ -19,18 +19,12 @@ import dagger.Provides;
 )
 public class CarBrandsListModule {
 
-    private CarBrandsPresenterOutput mView;
-
-    public CarBrandsListModule(CarBrandsPresenterOutput view) {
-        mView = view;
-    }
-
     @Provides @Singleton public CarBrandsInteractorInput provideCarBrandsInteractor(LocationManager locationManager, DataStore dataStore) {
         return new CarBrandsInteractor(locationManager, dataStore);
     }
 
     @Provides @Singleton public CarBrandsPresenterInput provideCarBrandsPresenter(CarBrandsInteractorInput interactor, Navigator navigator) {
-        CarBrandsPresenter presenter = new CarBrandsPresenter(mView, interactor, navigator);
+        CarBrandsPresenter presenter = new CarBrandsPresenter(interactor, navigator);
         interactor.setInteractorOutput(presenter);
         return presenter;
     }

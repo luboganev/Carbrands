@@ -1,61 +1,104 @@
 package com.luboganev.carbrands.baseui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import com.luboganev.carbrands.application.CarBrandsApplication;
-import java.util.List;
+
+import com.luboganev.carbrands.application.ObjectGraphsHolder;
+import com.luboganev.carbrands.common.Navigator;
+
+import javax.inject.Inject;
+
 import dagger.ObjectGraph;
 
 /**
- *
  * This is a base Activity class, which abstracts away the boilerplate code
  * related to creating a Dagger scoped object graph and performing the injection
  * of dependencies.
- *
- * Created by Lyubomir Ganev (ganevlyu) on 30.12.2014
+ * <p/>
+ * Created by luboganev on 30/12/2014
  */
 public abstract class BaseDaggerActivity extends AppCompatActivity {
+
     /**
-     * A Dagger extended object graph, relevant only to the current Activity. It may be null, if
-     * the current Activity does not have its own object graph, i.e. it does not have its own modules.
+     *  The singleton Navigator object of the application
      */
-    private @Nullable ObjectGraph mActivityGraph;
+    @Inject Navigator navigator;
+
+    /**
+     * The id of the object graph used for injecting dependencies in the current activity
+     */
+    private long objectGraphId = -1;
+
+    /**
+     * The key used to save and restore the {@link #objectGraphId} through configuration changes
+     */
+    private static final String STATE_EXTRA_OBJECT_GRAPH_ID = "objectgraph_id";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // If activity has its own modules, it creates a scoped object graph, by extending the
-        // Application object graph, and saves a local reference to it.
-
-        List<Object> modules = getActivityModules();
-        if(modules != null && modules.size() > 0) {
-            mActivityGraph = CarBrandsApplication.get(this).createScopedGraph(modules.toArray());
+        // Check for stored id and restore it
+        if (savedInstanceState != null) {
+            objectGraphId = savedInstanceState.getLong(STATE_EXTRA_OBJECT_GRAPH_ID, -1);
         }
 
-        // Inject the current activity with dependencies if necessary
-        if(shouldInjectSelf()) {
+        // Check if an object graph already exists for this activity
+        ObjectGraph activityObjectGraph = ObjectGraphsHolder.getInstance().getObjectGraph(objectGraphId);
 
-            // If a scoped graph exists, inject from it. Otherwise inject from the application object graph.
-            if (mActivityGraph != null) {
-                mActivityGraph.inject(this);
-            } else {
-                CarBrandsApplication.get(this).inject(this);
-            }
-
-            // Signal to Activities extending the BaseActivity, that the injection is completed
-            onInjected(savedInstanceState);
+        if (activityObjectGraph == null) {
+            // Create a new object graph, which adds to the root application object graph
+            ObjectGraph rootObjectGraph = ObjectGraphsHolder.getInstance().getApplicationObjectGraph();
+            activityObjectGraph = ObjectGraphsHolder.createScopedGraph(rootObjectGraph, getActivityModules());
+            objectGraphId = ObjectGraphsHolder.getInstance().putObjectGraph(activityObjectGraph);
         }
+
+        // Inject dependencies
+        activityObjectGraph.inject(this);
+
+        // Make sure to update the navigator's current activity
+        navigator.setActivity(this);
+        onInjected(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Store the current object graph id to survive configuration change
+        outState.putLong(STATE_EXTRA_OBJECT_GRAPH_ID, objectGraphId);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        // Cleaning up the reference to the scoped object graph if any.
-        mActivityGraph = null;
+        // Any other call to this method is due to configuration change or low memory.
+        // We want to release the stored object graph only when the activity is truly
+        // finishing.
+        if (isFinishing()) {
+            onDestroyObjectGraph();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Make sure to update the navigator's current activity
+        navigator.setActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Make sure to update the navigator's current activity
+        navigator.setActivity(this);
+    }
+
+    protected void onDestroyObjectGraph() {
+        // Remove the current object graph from the holder
+        ObjectGraphsHolder.getInstance().removeObjectGraph(objectGraphId);
     }
 
     /**
@@ -64,29 +107,7 @@ public abstract class BaseDaggerActivity extends AppCompatActivity {
      *  the current Activity does not generate its own scoped object graph and uses the
      *  Application's object graph instead.
      */
-    protected @Nullable List<Object> getActivityModules() { return null; }
-
-    /**
-     *  This method returns whether the current Activity itself
-     *  should be injected with dependencies
-     */
-    protected boolean shouldInjectSelf() { return false; }
-
-    /**
-     *  A helper method used to inject objects. It uses the Activity's the scoped object
-     *  graph if one exists. In case the Activity does not have its own scoped object graph,
-     *  the Application's object graph is used for the injection.
-     *
-     * @param object
-     *      The object to be injected with dependencies
-     */
-    protected void inject(@NonNull Object object) {
-        if(mActivityGraph == null) {
-            CarBrandsApplication.get(this).inject(object);
-        } else {
-            mActivityGraph.inject(object);
-        }
-    }
+    protected @Nullable Object[] getActivityModules() { return null; }
 
     /**
      * This method gets called once the Activity has been injected.

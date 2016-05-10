@@ -39,6 +39,11 @@ public class CarBrandsInteractor implements CarBrandsInteractorInput {
         mDataStore.execute(mDataStoreCallback);
     }
 
+    @Override
+    public void destroy() {
+        //TODO: clean up and cancel any running requests
+    }
+
     private final LocationManagerCallback mLocationCallback = new LocationManagerCallback() {
         @Override
         public void currentCountryCode(String countryCode) {

@@ -12,10 +12,10 @@ import java.util.List;
 public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     private CarBrandDetailInteractorOutput mPresenter;
     private final DataStore mDataStore;
+    private final long mCarBrandId;
 
-    private long mCarBrandIdToLoad = CarBrand.STORE_ID_NONE;
-
-    public CarBrandDetailInteractor(DataStore dataStore) {
+    public CarBrandDetailInteractor(long carBrandId, DataStore dataStore) {
+        mCarBrandId = carBrandId;
         mDataStore = dataStore;
     }
 
@@ -25,15 +25,15 @@ public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     }
 
     @Override
-    public void setCarBrandIdToLoad(long carBrandId) {
-        mCarBrandIdToLoad = carBrandId;
+    public void loadCarBrandDetail() {
+        mDataStore.resetFilters();
+        mDataStore.filterCarBrandId(mCarBrandId);
+        mDataStore.execute(mDataStoreCallback);
     }
 
     @Override
-    public void loadCarBrandDetail() {
-        mDataStore.resetFilters();
-        mDataStore.filterCarBrandId(mCarBrandIdToLoad);
-        mDataStore.execute(mDataStoreCallback);
+    public void destroy() {
+        // TODO: clean up and cancel running requests
     }
 
     private final DataStoreCallback mDataStoreCallback = new DataStoreCallback() {

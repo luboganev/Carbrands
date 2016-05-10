@@ -1,17 +1,16 @@
 package com.luboganev.carbrands.carbrands;
 
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.luboganev.carbrands.common.Navigator;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by luboganev on 25/04/15.
  */
 public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInteractorOutput {
-    private final CarBrandsPresenterOutput mView;
+    private CarBrandsPresenterOutput mView;
     private final CarBrandsInteractorInput mInteractor;
     private final Navigator mNavigator;
 
@@ -19,12 +18,7 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     private List<CarBrandListDisplayModel> mLoadedData;
     private String mCurrentCountryName;
 
-    private static final String STATE_EXTRA_LOADED_DATA = "state_extra_loaded_data";
-    private static final String STATE_EXTRA_COUNTRY_FILTER_ACTIVE = "state_extra_country_filter_active";
-    private static final String STATE_EXTRA_COUNTRY_NAME = "state_extra_country_name";
-
-    public CarBrandsPresenter(CarBrandsPresenterOutput view, CarBrandsInteractorInput interactor, Navigator navigator) {
-        this.mView = view;
+    public CarBrandsPresenter(CarBrandsInteractorInput interactor, Navigator navigator) {
         this.mInteractor = interactor;
         this.mNavigator = navigator;
     }
@@ -32,11 +26,18 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     // CarBrandsPresenterInput
 
     @Override
+    public void setView(@NonNull CarBrandsPresenterOutput view) {
+        mView = view;
+    }
+
+    @Override
     public void onViewShow() {
         if(mLoadedData != null) {
             mView.setCarBrands(mLoadedData);
             return;
         }
+
+        updateUICountryName();
 
         reload();
     }
@@ -52,7 +53,7 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
             mShouldFilterByCurrentCountry = shouldFilterByCurrentCountry;
             if (!mShouldFilterByCurrentCountry) {
                 mCurrentCountryName = null;
-                mView.clearCountryName();
+                updateUICountryName();
             }
             reload();
         }
@@ -70,44 +71,13 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     }
 
     @Override
-    public void onViewSaveState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(STATE_EXTRA_COUNTRY_FILTER_ACTIVE, mShouldFilterByCurrentCountry);
-        if (mLoadedData != null) {
-            CarBrandListDisplayModel[] array = new CarBrandListDisplayModel[mLoadedData.size()];
-            mLoadedData.toArray(array);
-            savedInstanceState.putParcelableArray(STATE_EXTRA_LOADED_DATA, array);
-        }
-        if (mCurrentCountryName != null) {
-            savedInstanceState.putString(STATE_EXTRA_COUNTRY_NAME, mCurrentCountryName);
-        }
-    }
-
-    @Override
-    public void onViewCreate(Bundle launchingIntentExtras, Bundle savedInstanceState) {
-        if(savedInstanceState == null) {
-            return;
-        }
-
-        mShouldFilterByCurrentCountry = savedInstanceState.getBoolean(STATE_EXTRA_COUNTRY_FILTER_ACTIVE, false);
-        if (savedInstanceState.containsKey(STATE_EXTRA_LOADED_DATA)) {
-            mLoadedData = Arrays.asList((CarBrandListDisplayModel[])savedInstanceState.getParcelableArray(STATE_EXTRA_LOADED_DATA));
-        }
-        if (savedInstanceState.containsKey(STATE_EXTRA_COUNTRY_NAME)) {
-            mCurrentCountryName = savedInstanceState.getString(STATE_EXTRA_COUNTRY_NAME);
-            mView.updateCountryName(mCurrentCountryName);
-        } else {
-            mView.clearCountryName();
-        }
-    }
-
-    @Override
-    public void onViewDestroy(boolean isExiting) {
-
-    }
-
-    @Override
     public boolean isLocationFilterActive() {
-        return false;
+        return mShouldFilterByCurrentCountry;
+    }
+
+    @Override
+    public void destroy() {
+        mInteractor.destroy();
     }
 
     // CarBrandsInteractorOutput
@@ -123,5 +93,15 @@ public class CarBrandsPresenter implements CarBrandsPresenterInput, CarBrandsInt
     public void currentCountryChanged(String newCountryName) {
         mCurrentCountryName = newCountryName;
         mView.updateCountryName(newCountryName);
+    }
+
+    // Helper methods
+
+    private void updateUICountryName() {
+        if (mCurrentCountryName != null) {
+            mView.updateCountryName(mCurrentCountryName);
+        } else {
+            mView.clearCountryName();
+        }
     }
 }

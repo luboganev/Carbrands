@@ -1,11 +1,7 @@
 package com.luboganev.carbrands.common;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 
-import com.luboganev.carbrands.carbrandDetail.CarBrandDetailActivity;
 import com.luboganev.carbrands.carbrands.CarBrandListDisplayModel;
 
 /**
@@ -14,13 +10,15 @@ import com.luboganev.carbrands.carbrands.CarBrandListDisplayModel;
  * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
  */
 public class Navigator {
-    private final Activity mActivity;
+    private Activity mActivity;
 
-    public Navigator(Activity activity) {
+    /**
+     * This method should be called whenever the foreground activity changes, so that the {@link Navigator}
+     * always contains the latest activity which the user is interacting with
+     */
+    public void setActivity(Activity activity) {
         mActivity = activity;
     }
-
-    private static final String CARBRAND_LIST_DISPLAYMODEL_EXTRA = "carbrand_list_displaymodel_extra";
 
     /**
      * Assuming that the current activity is the CarBrandsListActivity, this method starts the
@@ -30,25 +28,6 @@ public class Navigator {
      * @param listDisplayModel
      */
     public void navigateToBrandDetail(CarBrandListDisplayModel listDisplayModel) {
-        Intent intent = new Intent(mActivity.getApplicationContext(), CarBrandDetailActivity.class);
-        intent.putExtra(CARBRAND_LIST_DISPLAYMODEL_EXTRA, listDisplayModel);
-        mActivity.startActivity(intent);
-    }
-
-    /**
-     * This method extracts from the input bundle the display model
-     * of the selected CarBrand item from the CarBrands list.
-     *
-     * @param extras
-     *      The extras of the launching Intent
-     */
-    public CarBrandListDisplayModel getCarBrandListDisplayModel(Bundle extras) {
-        if (extras != null) {
-            Parcelable extra = extras.getParcelable(CARBRAND_LIST_DISPLAYMODEL_EXTRA);
-            if (extra != null && extra instanceof CarBrandListDisplayModel) {
-                return (CarBrandListDisplayModel) extra;
-            }
-        }
-        return null;
+        mActivity.startActivity(CarBrandDetailIntentHelper.getLaunchingIntent(mActivity, listDisplayModel));
     }
 }
