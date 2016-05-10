@@ -1,7 +1,7 @@
 package com.luboganev.carbrands.carbrandDetail;
 
+import com.luboganev.carbrands.common.CancellableDataStoreCallback;
 import com.luboganev.carbrands.common.DataStore;
-import com.luboganev.carbrands.common.DataStoreCallback;
 import com.luboganev.carbrands.model.CarBrand;
 
 import java.util.List;
@@ -28,19 +28,36 @@ public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     public void loadCarBrandDetail() {
         mDataStore.resetFilters();
         mDataStore.filterCarBrandId(mCarBrandId);
+
+        cancelDataCallback();
+        mDataStoreCallback = new DataCallback();
         mDataStore.execute(mDataStoreCallback);
     }
 
     @Override
     public void destroy() {
-        // TODO: clean up and cancel running requests
+        cancelDataCallback();
     }
 
-    private final DataStoreCallback mDataStoreCallback = new DataStoreCallback() {
+    private void cancelDataCallback() {
+        if (mDataStoreCallback != null) {
+            mDataStoreCallback.cancel();
+            mDataStoreCallback = null;
+        }
+    }
+
+    private DataCallback mDataStoreCallback;
+
+    private class DataCallback extends CancellableDataStoreCallback {
         @Override
         public void foundCarBrands(List<CarBrand> carBrands) {
+            if (isCancelled) {
+                return;
+            }
+
+            cancelDataCallback();
             mPresenter.foundCarBrandDetail(new CarBrandDetailDisplayModel(carBrands.get(0)));
         }
-    };
+    }
 
 }

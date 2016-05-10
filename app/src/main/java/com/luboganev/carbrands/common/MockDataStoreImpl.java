@@ -59,7 +59,7 @@ public class MockDataStoreImpl implements DataStore {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
             return null;
