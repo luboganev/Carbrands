@@ -12,9 +12,7 @@ import android.widget.ProgressBar;
 
 import com.luboganev.carbrands.R;
 import com.luboganev.carbrands.baseui.BaseDaggerActivity;
-import com.luboganev.carbrands.common.NavigatorModule;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +20,9 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * Created by luboganev on 21/04/2015
+ */
 public class CarBrandsListActivity extends BaseDaggerActivity implements CarBrandsPresenterOutput, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, CompoundButton.OnCheckedChangeListener {
 
     @Inject CarBrandsPresenterInput presenter;
@@ -35,8 +36,14 @@ public class CarBrandsListActivity extends BaseDaggerActivity implements CarBran
     private ArrayAdapter<CarBrandListDisplayModel> mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected Object[] getActivityModules() {
+        return new Object[]{new CarBrandsListModule()};
+    }
+
+    @Override
+    protected void onInjected(Bundle savedInstanceState) {
+        super.onInjected(savedInstanceState);
+        presenter.setView(this);
         setContentView(R.layout.activity_car_brands_list);
         ButterKnife.inject(this);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -48,31 +55,15 @@ public class CarBrandsListActivity extends BaseDaggerActivity implements CarBran
     }
 
     @Override
-    protected List<Object> getActivityModules() {
-        return Arrays.<Object>asList(new NavigatorModule(this), new CarBrandsListModule(this));
-    }
-
-    @Override
-    protected boolean shouldInjectSelf() {
-        return true;
-    }
-
-    @Override
-    protected void onInjected(Bundle savedInstanceState) {
-        super.onInjected(savedInstanceState);
-        presenter.onViewCreate(null, savedInstanceState);
+    protected void onDestroyObjectGraph() {
+        super.onDestroyObjectGraph();
+        presenter.destroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.onViewShow();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        presenter.onViewSaveState(outState);
     }
 
     @Override

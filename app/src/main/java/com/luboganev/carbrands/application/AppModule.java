@@ -6,6 +6,7 @@ import com.luboganev.carbrands.common.DataStore;
 import com.luboganev.carbrands.common.LocationManager;
 import com.luboganev.carbrands.common.MockDataStoreImpl;
 import com.luboganev.carbrands.common.MockLocationManagerImpl;
+import com.luboganev.carbrands.common.Navigator;
 
 import javax.inject.Singleton;
 
@@ -17,7 +18,7 @@ import dagger.Provides;
  * It is not related to any UI element, therefore the objects provided by it have lifecycle as long
  * as the Application process itself.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 @Module(
         library = true
@@ -39,5 +40,9 @@ public class AppModule {
 
     @Provides @Singleton public DataStore provideDataStore() {
         return new MockDataStoreImpl();
+    }
+
+    @Provides @Singleton public Navigator provideNavigator() {
+        return new Navigator();
     }
 }

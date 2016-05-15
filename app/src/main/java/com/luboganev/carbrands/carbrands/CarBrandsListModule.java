@@ -11,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 24.04.2015
+ * Created by luboganev on 24/04/2015
  */
 @Module(injects = CarBrandsListActivity.class,
         addsTo = AppModule.class,
@@ -19,18 +19,12 @@ import dagger.Provides;
 )
 public class CarBrandsListModule {
 
-    private CarBrandsPresenterOutput mView;
-
-    public CarBrandsListModule(CarBrandsPresenterOutput view) {
-        mView = view;
-    }
-
     @Provides @Singleton public CarBrandsInteractorInput provideCarBrandsInteractor(LocationManager locationManager, DataStore dataStore) {
         return new CarBrandsInteractor(locationManager, dataStore);
     }
 
     @Provides @Singleton public CarBrandsPresenterInput provideCarBrandsPresenter(CarBrandsInteractorInput interactor, Navigator navigator) {
-        CarBrandsPresenter presenter = new CarBrandsPresenter(mView, interactor, navigator);
+        CarBrandsPresenter presenter = new CarBrandsPresenter(interactor, navigator);
         interactor.setInteractorOutput(presenter);
         return presenter;
     }

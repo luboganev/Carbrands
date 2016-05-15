@@ -7,7 +7,7 @@ import java.util.Random;
  * This class helps with mapping country code to a country name. It related only to the mock data
  * used in this demo and has nothing to do with the application architecture itself.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 24.04.2015
+ * Created by luboganev on 24/04/2015
  */
 public class CountryNamesHelper {
     private static final HashMap<String, String> mappingCode2Name = new HashMap<>();

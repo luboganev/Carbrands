@@ -3,7 +3,7 @@ package com.luboganev.carbrands.model;
 /**
  * A model containing the names of a single car brand founder
  *
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public class CarBrandFounder {
     public String firstName;

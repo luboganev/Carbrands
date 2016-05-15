@@ -10,17 +10,18 @@ import android.widget.TextView;
 
 import com.luboganev.carbrands.R;
 import com.luboganev.carbrands.baseui.BaseDaggerActivity;
-import com.luboganev.carbrands.common.NavigatorModule;
+import com.luboganev.carbrands.carbrands.CarBrandListDisplayModel;
+import com.luboganev.carbrands.common.CarBrandDetailIntentHelper;
 import com.squareup.picasso.Picasso;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * Created by luboganev on 20/04/2015
+ */
 public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBrandDetailPresenterOutput {
 
     @Inject CarBrandDetailPresenterInput presenter;
@@ -32,38 +33,29 @@ public class CarBrandDetailActivity extends BaseDaggerActivity implements CarBra
     @InjectView(R.id.contentScrollView) ScrollView contentScrollView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_brand_detail);
-        ButterKnife.inject(this);
-    }
-
-    @Override
-    protected List<Object> getActivityModules() {
-        return Arrays.<Object>asList(new NavigatorModule(this), new CarBrandDetailModule(this));
-    }
-
-    @Override
-    protected boolean shouldInjectSelf() {
-        return true;
+    protected Object[] getActivityModules() {
+        CarBrandListDisplayModel listDisplayModel = CarBrandDetailIntentHelper.getCarBrandListDisplayModel(getIntent().getExtras());
+        return new Object[]{new CarBrandDetailModule(listDisplayModel.getCarBrandId(), listDisplayModel.getName())};
     }
 
     @Override
     protected void onInjected(Bundle savedInstanceState) {
         super.onInjected(savedInstanceState);
-        presenter.onViewCreate(getIntent().getExtras(), savedInstanceState);
+        presenter.setView(this);
+        setContentView(R.layout.activity_car_brand_detail);
+        ButterKnife.inject(this);
+    }
+
+    @Override
+    protected void onDestroyObjectGraph() {
+        super.onDestroyObjectGraph();
+        presenter.destroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.onViewShow();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        presenter.onViewSaveState(outState);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

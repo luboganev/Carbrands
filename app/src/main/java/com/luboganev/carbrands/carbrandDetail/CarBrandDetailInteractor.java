@@ -1,21 +1,21 @@
 package com.luboganev.carbrands.carbrandDetail;
 
+import com.luboganev.carbrands.common.CancellableDataStoreCallback;
 import com.luboganev.carbrands.common.DataStore;
-import com.luboganev.carbrands.common.DataStoreCallback;
 import com.luboganev.carbrands.model.CarBrand;
 
 import java.util.List;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
+ * Created by luboganev on 27/04/2015
  */
 public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     private CarBrandDetailInteractorOutput mPresenter;
     private final DataStore mDataStore;
+    private final long mCarBrandId;
 
-    private long mCarBrandIdToLoad = CarBrand.STORE_ID_NONE;
-
-    public CarBrandDetailInteractor(DataStore dataStore) {
+    public CarBrandDetailInteractor(long carBrandId, DataStore dataStore) {
+        mCarBrandId = carBrandId;
         mDataStore = dataStore;
     }
 
@@ -25,22 +25,39 @@ public class CarBrandDetailInteractor implements CarBrandDetailInteractorInput {
     }
 
     @Override
-    public void setCarBrandIdToLoad(long carBrandId) {
-        mCarBrandIdToLoad = carBrandId;
-    }
-
-    @Override
     public void loadCarBrandDetail() {
         mDataStore.resetFilters();
-        mDataStore.filterCarBrandId(mCarBrandIdToLoad);
+        mDataStore.filterCarBrandId(mCarBrandId);
+
+        cancelDataCallback();
+        mDataStoreCallback = new DataCallback();
         mDataStore.execute(mDataStoreCallback);
     }
 
-    private final DataStoreCallback mDataStoreCallback = new DataStoreCallback() {
+    @Override
+    public void destroy() {
+        cancelDataCallback();
+    }
+
+    private void cancelDataCallback() {
+        if (mDataStoreCallback != null) {
+            mDataStoreCallback.cancel();
+            mDataStoreCallback = null;
+        }
+    }
+
+    private DataCallback mDataStoreCallback;
+
+    private class DataCallback extends CancellableDataStoreCallback {
         @Override
         public void foundCarBrands(List<CarBrand> carBrands) {
+            if (isCancelled) {
+                return;
+            }
+
+            cancelDataCallback();
             mPresenter.foundCarBrandDetail(new CarBrandDetailDisplayModel(carBrands.get(0)));
         }
-    };
+    }
 
 }

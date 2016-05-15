@@ -1,28 +1,35 @@
 package com.luboganev.carbrands.carbrandDetail;
 
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 
-import com.luboganev.carbrands.carbrands.CarBrandListDisplayModel;
 import com.luboganev.carbrands.common.Navigator;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 27.04.2015
+ * Created by luboganev on 27/04/2015
  */
 public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, CarBrandDetailInteractorOutput {
-    private final CarBrandDetailPresenterOutput mView;
+    private CarBrandDetailPresenterOutput mView;
     private final CarBrandDetailInteractorInput mInteractor;
     private final Navigator mNavigator;
+    private final String mCarBrandName;
 
-    private static final String STATE_EXTRA_LOADED_DATA = "state_extra_loaded_data";
     private CarBrandDetailDisplayModel mLoadedData;
 
-    public CarBrandDetailPresenter(CarBrandDetailPresenterOutput view, CarBrandDetailInteractorInput interactor, Navigator navigator) {
-        mView = view;
+    public CarBrandDetailPresenter(String carBrandName,
+                                   CarBrandDetailInteractorInput interactor,
+                                   Navigator navigator) {
+        mCarBrandName = carBrandName;
         mInteractor = interactor;
         mNavigator = navigator;
     }
 
     // CarBrandDetailPresenterInput implementation
+
+    @Override
+    public void setView(@NonNull CarBrandDetailPresenterOutput view) {
+        mView = view;
+        mView.setCarBrandName(mCarBrandName);
+    }
 
     @Override
     public void onViewShow() {
@@ -34,34 +41,14 @@ public class CarBrandDetailPresenter implements CarBrandDetailPresenterInput, Ca
         reload();
     }
 
+    @Override
+    public void destroy() {
+        mInteractor.destroy();
+    }
+
     private void reload() {
         mView.showProgress();
         mInteractor.loadCarBrandDetail();
-    }
-
-    @Override
-    public void onViewSaveState(Bundle savedInstanceState) {
-        if (mLoadedData != null) {
-            savedInstanceState.putParcelable(STATE_EXTRA_LOADED_DATA, mLoadedData);
-        }
-    }
-
-    @Override
-    public void onViewCreate(Bundle launchingIntentExtras, Bundle savedInstanceState) {
-        CarBrandListDisplayModel intentCarBrand = mNavigator.getCarBrandListDisplayModel(launchingIntentExtras);
-        if(intentCarBrand != null) {
-            mInteractor.setCarBrandIdToLoad(intentCarBrand.getCarBrandId());
-            mView.setCarBrandName(intentCarBrand.getName());
-        }
-
-        if(savedInstanceState != null && savedInstanceState.containsKey(STATE_EXTRA_LOADED_DATA)) {
-            mLoadedData = savedInstanceState.getParcelable(STATE_EXTRA_LOADED_DATA);
-        }
-    }
-
-    @Override
-    public void onViewDestroy(boolean isExiting) {
-
     }
 
     // CarBrandDetailInteractorOutput implementation

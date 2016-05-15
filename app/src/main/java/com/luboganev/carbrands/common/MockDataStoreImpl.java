@@ -13,7 +13,7 @@ import java.util.List;
  * A mock implementation of a data store filled with mock data stored in memory.
  * Any delays while retrieving the data are simulated through a sleeping AsyncTask.
  *
- * Created by Lyubomir Ganev (ganevlyu) on 21.04.2015
+ * Created by luboganev on 21/04/2015
  */
 public class MockDataStoreImpl implements DataStore {
 
@@ -59,7 +59,7 @@ public class MockDataStoreImpl implements DataStore {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
             return null;

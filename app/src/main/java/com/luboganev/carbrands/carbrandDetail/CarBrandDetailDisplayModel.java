@@ -9,7 +9,7 @@ import com.luboganev.carbrands.model.CarBrand;
 import com.luboganev.carbrands.model.CarBrandFounder;
 
 /**
- * Created by Lyubomir Ganev (ganevlyu) on 20.04.2015
+ * Created by luboganev on 20/04/2015
  */
 public class CarBrandDetailDisplayModel extends CarBrandListDisplayModel implements Parcelable {
     public final String countryName;
